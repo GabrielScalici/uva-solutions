@@ -1,2 +1,2 @@
 # UVA
-:notebook: Solutions to UVA problems
+:notebook: Solutions to UVA problems, College assignments.
