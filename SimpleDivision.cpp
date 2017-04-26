@@ -74,9 +74,10 @@ int main(int argc, char const *argv[]){
             total = aux_aux;
         }
       }//fim do for com as contas
-      cout << total << endl;
-    }
 
+    }
+    //impressao do maior
+    cout << total << endl;
   }
 
 
