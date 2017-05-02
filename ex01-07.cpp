@@ -12,6 +12,8 @@ int main(int argc, char const *argv[]){
 
   int campsites;
   int nights;
+  int total = 0;
+  int aux;
 
   cin >> campsites;
   cin >> nights;
@@ -19,10 +21,14 @@ int main(int argc, char const *argv[]){
   int cont = campsites + 1;
 
   while(cont){
-
+    cin >> aux;
+    total += aux;
     cont--;
   }
 
+  total = total/nights;
+
+  cout << total << endl;
 
 
   return 0;
