@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <cstring>
+#include <math.h>
+
 
 using namespace std;
 
@@ -12,7 +14,7 @@ int main(int argc, char const *argv[]){
 
   int campsites;
   int nights;
-  int total = 0;
+  float total = 0;
   int aux;
 
   cin >> campsites;
@@ -27,6 +29,7 @@ int main(int argc, char const *argv[]){
   }
 
   total = total/nights;
+  total = ceil(total);
 
   cout << total << endl;
 
