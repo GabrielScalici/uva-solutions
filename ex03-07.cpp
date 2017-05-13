@@ -10,8 +10,8 @@ using namespace std;
 
 int main(int argc, char const *argv[]){
 
-	long combustivel, aux, andado, dist, percorrido, gas;
-	float capacidade;
+	long combustivel = 0, aux = 0, andado = 0, dist = 0, percorrido = 0;
+	float capacidade = 0, gas = 0;
 	char analise;
 	string passo;
 
@@ -88,6 +88,7 @@ int main(int argc, char const *argv[]){
 
 				//exibindo para o usuario
 				printf("%.3lf\n", capacidade);
+				capacidade = 0;
 				break;
 		}
 
