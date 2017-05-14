@@ -1,14 +1,6 @@
-0 Fuel consumption 10
-100 Goal
-0 Fuel consumption 5
-100 Fuel consumption 30
-200 Goal
-0 Fuel consumption 20
-10 Leak
-25 Leak
-25 Fuel consumption 30
-50 Gas station
-70 Mechanic
-100 Leak
-120 Goal
-0 Fuel consumption 0
+5 4
+1 2
+2 3
+1 3
+1 5
+0 0
