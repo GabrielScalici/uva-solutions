@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <stdio.h>
+#include <stdlib.h>
 #include <vector>
 #include <stack>
 #include <queue>
@@ -12,11 +13,19 @@ using namespace std;
 
 int main(int argc, char const *argv[]){
 
-  int i, n, m, x, y, numero, aux = 0;
+  int i = 0, n = 0, m = 0, x = 0, y = 0, numero = 0, aux = 0;
   //estruturas usadas
   vector <int> v[MAX];
   queue <int> fila;
   int quant[MAX];
+  //vetor final
+  int ordenado[5];
+
+  //iniciando tudo com 0
+  for(i = 0; i < MAX; i++){
+    quant[i] = 0;
+  }
+
 
   //enquanto for diferente de zero
   while(cin >> n){
@@ -40,9 +49,6 @@ int main(int argc, char const *argv[]){
           quant[y]++;
       }
 
-      //vetor final
-      int ordenado[n];
-
       //atulizando quando a fila tiver o valor 0
       for(i = 0; i < n; i++){
           if(quant[i+1] == 0){
@@ -61,7 +67,10 @@ int main(int argc, char const *argv[]){
           ordenado[aux] = numero;
           aux++;
 
-          for(i = 0; i < v[numero].size(); i++ ) {
+          //convertendo para inteiro
+          int tam = (int)v[numero].size();
+
+          for(i = 0; i < tam; i++ ) {
               quant[v[numero][i]]--;
               if (quant[v[numero][i]] == 0 ){
                   fila.push(v[numero][i]);
