@@ -82,10 +82,8 @@ int main(int argc, char const *argv[]){
       //exibindo o vetor ordenado
       for (i = 0; i < n; i++ ){
           if(i == 0){
-            cout << ordenado[1];
-          }else if(i == 1){
-            cout << " " << ordenado[0];
-          }else{
+            cout << ordenado[0];
+          }else
             cout << " " << ordenado[i];
           }
       }
