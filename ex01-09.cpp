@@ -6,26 +6,28 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <math.h>
 
 #define MAX 100
+#define MIN 100000.0
 
 using namespace std;
 
-double P[100][2];
+double P[MAX][2];
 int n;
-double sum;
+//double sum;
 
 void dikjstra(){
-    double ax,min;
-    double dist[100];
-    bool intree[100];
+    double ax;
+    double dist[MAX];
+    bool intree[MAX];
 
     memset(intree,0,sizeof(intree));
-    for(int i=0;i<100;i++) dist[i]=1000000.0;
+    for(int i=0;i<MAX;i++) dist[i]=1000000.0;
 
     int v=0;
     dist[0]=0;
-    sum=0;
+    double sum=0;
 
     while(!intree[v]){
         intree[v]=1;
@@ -39,7 +41,8 @@ void dikjstra(){
         }
 
         v=0;
-        min=1000000.0;
+        //Valor grande para análise
+        double min = MIN;
 
         for(int i=0;i<n;i++){
             if(!intree[i]){
@@ -57,26 +60,29 @@ void dikjstra(){
 
 int main(int argc, char const *argv[]){
 
-    freopen("in.txt","r",stdin);
-    freopen("out.txt","w",stdout);
-
     int T;
 
     double a,b;
 
-    cin>>T;
+    scanf("%d", &T);
 
     for(int i=0;i<T;i++){
-        cin>>n;
+
+        scanf("%d", &n);
 
         for(int j=0;j<n;j++){
-            cin>>a>>b;
+
+            scanf("%lf\n", &a);
+            scanf("%lf\n", &b);
+
             P[j][0]=a;
             P[j][1]=b;
         }
 
         dikjstra();
-        if(i!=T-1) cout<<endl;
+        if(i!=T-1){
+            printf("\n");
+        }
     }
 
   return 0;
