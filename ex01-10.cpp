@@ -1,67 +1,127 @@
-#include<cstdio>
-#include<vector>
-#include<queue>
-#include<algorithm>
-#define N 20000
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <math.h>
+
+#define N 10000
+#define COMP 1e9
+#define VERDADEIRO 1
+#define UN unsigned
+
 using namespace std;
-struct Node
-{
-    int v, w;
+
+
+struct Node{
+    UN int v, w;
     Node(){}
-    Node(int vv, int ww) :v(vv), w(ww){}
-    bool operator<(const Node& a)const{return w > a.w; }//小的優先
+    Node(UN int vv, UN int ww) :v(vv), w(ww){}
+    bool operator<(const Node& a)const{return w > a.w; }
 };
-vector<Node>list[N];//adjacent list
-int dijkstra(int s, int goal, int n);
-int main()
+
+vector<Node>vetor[N];
+
+//algoritmo dijkstra
+int dij(UN int s, UN int t, UN int n)
 {
-    int Case;
-    scanf("%d", &Case);
-    for (int c = 1; c <= Case; c++)
-    {
-        int n, m, s, t, u, v, w, i;
-        scanf("%d%d%d%d", &n, &m, &s, &t);
-        for (i = 0; i < n; i++)
-            list[i].clear();
-        for (int i = 0; i < m; i++)
-        {
-            scanf("%d%d%d", &u, &v, &w);
-            list[u].push_back(Node(v, w));
-            list[v].push_back(Node(u, w));
+    UN int visitado[N]= {};
+    UN int dist[N];
+    UN int proximo;
+
+    // usando func fill
+    fill(dist, dist + n, COMP);
+
+    dist[s] = 0;
+    priority_queue<Node> fila;
+    fila.push(Node(s, 0));
+
+    //roda ate achar alguma saida pelo algoritmo
+    while (VERDADEIRO){
+        proximo = -1;
+        //arrumando a fila
+        while (fila.empty() == 0 && visitado[proximo = fila.top().v]){
+            fila.pop();
         }
-        printf("Case #%d: ", c);
-        int ans = dijkstra(s, t, n);
-        if (ans == 1e9)
-            puts("unreachable");
-        else
-            printf("%d\n", ans);
-    }
-    return 0;
-}
-int dijkstra(int s, int goal, int n)
-{
-    bool isVisit[N] = {};
-    int d[N];
-    fill(d, d + n, 1e9);
-    d[s] = 0;
-    priority_queue<Node> PQ;
-    PQ.push(Node(s, 0));
-    while (true)
-    {
-        int next = -1;
-        while (!PQ.empty() && isVisit[next = PQ.top().v])
-            PQ.pop();
-        if (next == -1 || next == goal)
-            return d[goal];
-        isVisit[next] = true;
-        for (Node node : list[next])
-        {
-            if (!isVisit[node.v] && d[next] + node.w < d[node.v])
-            {
-                d[node.v] = d[next] + node.w;
-                PQ.push(Node(node.v, d[node.v]));
+        if (proximo == -1 || proximo == t){
+          //ja retorna e sai da func
+          return dist[t];
+        }
+
+        //marca como visitado
+        visitado[proximo] = 1;
+        for (Node node : vetor[proximo]){
+            if (visitado[node.v] == 0 && (dist[proximo] + node.w) < dist[node.v]){
+                dist[node.v] = (dist[proximo] + node.w);
+                //adiciona na fila
+                fila.push(Node(node.v, dist[node.v]));
             }
         }
     }
-    return d[goal];
+    //retorna o final de toda a analise
+    return dist[t];
+}
+
+//imprimindo a resposta
+void imprimir(UN int c, UN int res){
+  //Imprimindo para o usuario
+  cout << "Case #" << (c+1) << ": ";
+
+  //verificando se teve resposta ou nao
+  if (res != COMP)
+      cout << res << endl;
+  else
+      cout << "unreachable" << endl;
+}
+
+void atualiza(UN int tam){
+  UN int u, v, w;
+  for (UN int i = 0; i < tam; i++){
+    cin >> u;
+    cin >> v;
+    cin >> w;
+    vetor[u].push_back(Node(v, w));
+    vetor[v].push_back(Node(u, w));
+  }
+}
+
+void limpar_fila(UN int tam){
+  for (UN int i = 0; i < tam; i++){
+    vetor[i].clear();
+  }
+}
+
+int main(int argc, char const *argv[]){
+    UN int quantidade;
+    UN int res;
+
+    //pegando as primeiras informacoes
+    cin >> quantidade;
+    for (UN int c = 0; c < quantidade; c++){
+        //variaveis unsigned usadas na logica
+        UN int n, m, s, t;
+
+        cin >> n;
+
+        //limpando fila
+        limpar_fila(n);
+
+        cin >> m;
+        cin >> s;
+        cin >> t;
+
+        //percorrendo atualizando a fila
+        atualiza(m);
+
+        //fazendo o lg dijstra
+        res = dij(s, t, n);
+
+        //imprimindo os resultados
+        imprimir(c, res);
+
+    }
+    return 0;
 }
