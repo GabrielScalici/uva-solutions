@@ -15,6 +15,34 @@ using namespace std;
 
 vector<int> lista;
 
+int n, S;
+
+vector<vector<pair<int, int> > > Result;
+priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > fila_p;
+
+
+void dij(){
+  lista.assign(n, AUX);
+  lista[S] = 0;
+  fila_p.push(pair<int, int>(0, S));
+
+  while (fila_p.empty() == 0) {
+      pair<int, int> front = fila_p.top(); fila_p.pop();
+      int d = front.first, u = front.second;
+      if (d == lista[u]) {
+
+      int tam = Result[u].size();
+      for(int j = 0; j < tam ; j++){
+          pair<int, int> v = Result[u][j];
+          if (lista[u] + v.second < lista[v.first]) {
+              lista[v.first] = lista[u] + v.second;
+              fila_p.push(pair<int, int>(lista[v.first], v.first));
+          }
+      }
+  }
+}
+}
+
 //imprimindo a resposta
 void imprime(unsigned int i, unsigned int T){
   cout << "Case #" << i+1 << ": ";
@@ -27,10 +55,7 @@ void imprime(unsigned int i, unsigned int T){
 
 int main(int argc, char const *argv[]){
 
-  int N, n, m, S, T, a, b, w;
-
-  vector<vector<pair<int, int> > > Result;
-  priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > fila_p;
+  int N, m, T, a, b, w;
 
   cin >> N;
 
@@ -53,28 +78,12 @@ int main(int argc, char const *argv[]){
            m--;
        }
 
-       lista.assign(n, AUX);
-       lista[S] = 0;
-       fila_p.push(pair<int, int>(0, S));
+       //fazendo o algoritmo
+       dij();
 
-       while (fila_p.empty() == 0) {
-           pair<int, int> front = fila_p.top(); fila_p.pop();
-           int d = front.first, u = front.second;
-           if (d == lista[u]) {
 
-           int tam = Result[u].size();
-           for(int j = 0; j < tam ; j++){
-               pair<int, int> v = Result[u][j];
-               if (lista[u] + v.second < lista[v.first]) {
-                   lista[v.first] = lista[u] + v.second;
-                   fila_p.push(pair<int, int>(lista[v.first], v.first));
-               }
-           }
-       }
-
-    }
-
-    imprime(i, T);
+      //imprimindo
+      imprime(i, T);
 
    }
 }
