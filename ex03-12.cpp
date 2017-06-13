@@ -1,35 +1,73 @@
-#include<cstdio>
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <math.h>
+#include <cstdio>
+
 #define MIN(a,b) ((a)<(b)?(a):(b))
-#define N 51
+#define N 201
 #define DEF 1e9
-int cut[N], dp[N][N];
-int solve(int left, int right, int l_idx, int r_idx);
-int main()
+
+using namespace std;
+
+//variaveis globais
+int corte_1[N], busca[N][N];
+
+int solve(int esquerda, int direita, int ponteiro_es, int ponteiro_dir)
 {
-    int len, n, i;
-    while (scanf("%d", &len) && len)
-    {
-        scanf("%d", &n);
-        for (i = 0; i < n; i++)
-            scanf("%d", &cut[i]);
-        for (i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                dp[i][j] = DEF;
-        printf("The minimum cutting is %d.\n", solve(0, len, 0, n - 1));
+    int tamanho = direita - esquerda;
+    if (ponteiro_es == ponteiro_dir){
+        return tamanho;
+    }else if (ponteiro_es > ponteiro_dir){
+        return 0;
+    }else if (busca[ponteiro_es][ponteiro_dir] != DEF){
+        return busca[ponteiro_es][ponteiro_dir];
+    }
+
+    for (int i = ponteiro_es; i <= ponteiro_dir; i++){
+      //variaveis auxiliares
+      int aux0 = busca[ponteiro_es][ponteiro_dir];
+      int aux1 = solve(esquerda, corte_1[i], ponteiro_es, i - 1);
+      int aux2 = solve(corte_1[i], direita, i + 1, ponteiro_dir) + tamanho;
+        //adicionando o valor do minimo
+        busca[ponteiro_es][ponteiro_dir] = MIN(aux0, aux1 + aux2);
+    }
+    //retornando
+    return busca[ponteiro_es][ponteiro_dir];
+}
+
+
+int main(int argc, char const *argv[]){
+
+    int tamanho;
+    unsigned int quant;
+
+    //percorrendo enquanto houver testes
+    while (cin >> tamanho){
+        if(tamanho == 0){
+          break;
+        }
+        cin >> quant;
+        //pegando os valores
+        for(unsigned int i = 0; i < quant; i++)
+            cin >> corte_1[i];
+        //analisando
+        for(int i = 0; i < N; i++){
+            for (int j = 0; j < N; j++){
+                //atribuindo o valor padrao
+                busca[i][j] = DEF;
+            }
+        }
+
+        //Vendo a solucao e exibindo para o usuario
+        int solucao = solve(0, tamanho, 0, quant - 1);
+        cout << "The minimum cutting is " << solucao << endl;
+
     }
     return 0;
-}
-int solve(int left, int right, int l_idx, int r_idx)
-{
-
-    int len = right - left;
-    if (l_idx == r_idx)
-        return len;
-    else if (l_idx > r_idx)
-        return 0;
-    else if (dp[l_idx][r_idx] != DEF)
-        return dp[l_idx][r_idx];
-    for (int i = l_idx; i <= r_idx; i++)
-        dp[l_idx][r_idx] = MIN(dp[l_idx][r_idx], solve(left, cut[i], l_idx, i - 1) + solve(cut[i], right, i + 1, r_idx) + len);
-    return dp[l_idx][r_idx];
 }
