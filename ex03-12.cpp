@@ -66,7 +66,7 @@ int main(int argc, char const *argv[]){
 
         //Vendo a solucao e exibindo para o usuario
         int solucao = solve(0, tamanho, 0, quant - 1);
-        cout << "The minimum cutting is " << solucao << endl;
+        cout << "The minimum cutting is " << solucao << "." << endl;
 
     }
     return 0;
