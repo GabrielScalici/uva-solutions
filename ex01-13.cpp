@@ -12,17 +12,20 @@
 using namespace std;
 
 int rr = 0;
-int best_niceness = 0;
-int best_i = 0, sumi = 1;
-int best_j = 0;
-int sum = 0;
-int n = 0, r;
+int analise = 0;
+int melhor_num1 = 0;
+int totali = 1;
+int melhor_num2 = 0;
+int total = 0;
+int n = 0, r, i;
 
-void imprimi(){
-  if (best_j == 0)
+void imprime(){
+  //verificando para imprimir
+  if (melhor_num2 == 0)
     cout << "Route " << r << " has no nice parts" << endl;
   else
-    cout << "The nicest part of route "<< r << " is between stops " << best_i << " and " << best_j+1 << endl;
+    cout << "The nicest part of route "<< r << " is between stops " << melhor_num1 << " and " << melhor_num2+1 << endl;
+
 }
 
 int main(int argc, char const *argv[]){
@@ -33,28 +36,30 @@ int main(int argc, char const *argv[]){
 		cin >> n;
 
     //Zerando as variaveis
-		best_niceness = 0;
-		best_i = 0, sumi = 1;
-		best_j = 0;
-		sum = 0;
+		analise = 0;
+		melhor_num1 = 0, totali = 1;
+		melhor_num2 = 0;
+		total = 0;
 
-		for (int i = 1; i < n; i++) {
-			int niceness;
-			cin >> niceness;
-			sum += niceness;
+    //verificando a melhor solucao
+		for (i = 1; i < n; i++) {
+			int aux;
+			cin >> aux;
+			total += aux;
 
-			if ((sum > best_niceness) || (sum == best_niceness && i - sumi > best_j - best_i)) {
-        best_niceness = sum;
-				best_i = sumi;
-				best_j = i;
+			if ((total > analise) || (total == analise && i - totali > melhor_num2 - melhor_num1)) {
+        analise = total;
+				melhor_num1 = totali;
+				melhor_num2 = i;
 			}
-			if (sum < 0) {
-				sum = 0;
-				sumi = i + 1;
+      
+			if (total < 0) {
+				total = 0;
+				totali = i + 1;
 			}
 		}
 
-    imprimi();
+    imprime();
 
 	}
 
